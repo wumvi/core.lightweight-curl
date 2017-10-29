@@ -1,0 +1,21 @@
+{
+  "name": "wumvi/lightweight-curl",
+  "description": "LightweightCurl Curl library",
+  "library": "library",
+  "autoload": {
+    "psr-4": {
+      "LightweightCurl\\": "src"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+  },
+  "version": "1.0.4",
+  "authors": [
+    {
+      "name": "Kozlenko Vitaliy",
+      "role": "Developer"
+    }
+  ]
+}
