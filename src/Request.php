@@ -58,7 +58,7 @@ class Request
     private $fileForPutRequest = null;
 
     /** @var string */
-    private $outFile;
+    private $outFile = '';
 
     public function getFileForPutRequest(): ?string
     {
