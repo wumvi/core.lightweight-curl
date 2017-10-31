@@ -59,6 +59,16 @@ class Curl
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 0);
         curl_setopt($curl, CURLOPT_TIMEOUT, 20);
 
+        if ($request->getOutFilename()) {
+            $fwout = fopen($request->getOutFilename(),'w');
+            curl_setopt($curl, CURLOPT_BINARYTRANSFER, true);
+            curl_setopt($curl, CURLOPT_WRITEFUNCTION, function($curl, $data) use ($fwout) {
+                fwrite($fwout, $data);
+
+                return strlen($data);
+            });
+        }
+
         $proxy = $request->getProxy();
         if ($proxy) {
             curl_setopt($curl, CURLOPT_PROXYTYPE, $proxy->getType());
@@ -82,6 +92,7 @@ class Curl
         $httpCode = (int)curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
+        $data = $request->getOutFilename() ? '' : $data;
         return new Result($httpCode, $data);
     }
 }

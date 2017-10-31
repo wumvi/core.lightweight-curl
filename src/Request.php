@@ -57,6 +57,9 @@ class Request
     /** @var string|null */
     private $fileForPutRequest = null;
 
+    /** @var string */
+    private $outFile;
+
     public function getFileForPutRequest(): ?string
     {
         return $this->fileForPutRequest;
@@ -235,7 +238,8 @@ class Request
         $this->headers[] = $name . ': ' . $value;
     }
 
-    public function setHeaders(array $headers) {
+    public function setHeaders(array $headers)
+    {
         $this->headers = $headers;
     }
 
@@ -255,5 +259,20 @@ class Request
     public function getFiles(): array
     {
         return $this->files;
+    }
+
+    /**
+     * @param string $outFile
+     */
+    public function setOutFilename(string $outFile): void
+    {
+        $this->outFile = $outFile;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOutFilename(): string {
+        return $this->outFile;
     }
 }
