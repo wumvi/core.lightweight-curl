@@ -9,6 +9,8 @@ namespace LightweightCurl;
  */
 class Request
 {
+    private const DEFAULT_TIMEOUT = 5;
+
     /** Запрос GET */
     const METHOD_GET = 1;
 
@@ -57,8 +59,18 @@ class Request
     /** @var string|null */
     private $fileForPutRequest = null;
 
+    /**
+     * @var string
+     */
+    private $socket = '';
+
     /** @var string */
     private $outFile = '';
+
+    /**
+     * @var int
+     */
+    private $timeout = self::DEFAULT_TIMEOUT;
 
     public function getFileForPutRequest(): ?string
     {
@@ -72,6 +84,22 @@ class Request
     public function setMethod(int $method): void
     {
         $this->method = $method;
+    }
+
+    /**
+     * @param string $socket
+     */
+    public function setUnixSocket(string $socket): void
+    {
+        $this->socket = $socket;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnixSocket(): string
+    {
+        return $this->socket;
     }
 
     /**
@@ -135,6 +163,17 @@ class Request
     public function isCheckSsl(): bool
     {
         return $this->isCheckSsl;
+    }
+
+    public function setTimeout(int $timeout): void
+    {
+        $this->timeout = $timeout;
+    }
+
+
+    public function getTimeout(): int
+    {
+        return $this->timeout;
     }
 
     /**
@@ -272,7 +311,8 @@ class Request
     /**
      * @return string
      */
-    public function getOutFilename(): string {
+    public function getOutFilename(): string
+    {
         return $this->outFile;
     }
 }

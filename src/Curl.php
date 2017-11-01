@@ -57,7 +57,11 @@ class Curl
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, $request->isCheckSsl());
 
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 0);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 20);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $request->getTimeout());
+
+        if ($request->getUnixSocket()) {
+            curl_setopt($curl, CURLOPT_UNIX_SOCKET_PATH, $request->getUnixSocket());
+        }
 
         if ($request->getOutFilename()) {
             $fwout = fopen($request->getOutFilename(),'w');
