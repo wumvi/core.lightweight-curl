@@ -38,9 +38,7 @@ class Curl
             case Request::METHOD_POST:
                 curl_setopt($curl, CURLOPT_POST, 1);
                 $postData = $request->getData();
-                if ($request->getContentType() === Request::CONTENT_TYPE_X_WWW_FORM_URLENCODED
-                    && is_array($postData)
-                ) {
+                if ($request->getContentType() === ContentType::X_WWW_FORM_URLENCODED && is_array($postData)) {
                     $postData = urldecode(http_build_query($postData));
                 }
 

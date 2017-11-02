@@ -20,12 +20,6 @@ class Request
     /** Запроса PUT */
     const METHOD_PUT = 3;
 
-    /** Content type @see https://ru.wikipedia.org/wiki/Multipart/form-data */
-    const CONTENT_TYPE_MULTIPART_FORM_DATA = 'multipart/form-data';
-
-    /** @see Content type */
-    const CONTENT_TYPE_X_WWW_FORM_URLENCODED = 'application/x-www-form-urlencoded';
-
     /** @var int Метод запроса */
     private $method = self::METHOD_GET;
 
@@ -48,7 +42,7 @@ class Request
     private $isOutputHeaders = false;
 
     /** @var string Выводить ли заголовки запроса */
-    private $contentType = self::CONTENT_TYPE_MULTIPART_FORM_DATA;
+    private $contentType = ContentType::MULTIPART_FORM_DATA;
 
     /** @var \CURLFile[] Модель файлов для загрзуки */
     private $files = [];
@@ -232,9 +226,9 @@ class Request
 
     /**
      * Установка данных запроса
-     * @param array $data Данные запроса
+     * @param array|string $data Данные запроса
      */
-    public function setData(array $data): void
+    public function setData($data): void
     {
         $this->data = $data;
     }
@@ -243,7 +237,7 @@ class Request
      * Получаем данные запроса
      * @return array|string Данные запроса
      */
-    public function getData(): array
+    public function getData()
     {
         return $this->data;
     }
