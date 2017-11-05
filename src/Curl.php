@@ -71,6 +71,8 @@ class Curl
             });
         }
 
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, $request->isFollowLocation());
+
         $proxy = $request->getProxy();
         if ($proxy) {
             curl_setopt($curl, CURLOPT_PROXYTYPE, $proxy->getType());
@@ -95,6 +97,7 @@ class Curl
         curl_close($curl);
 
         $data = $request->getOutFilename() ? '' : $data;
+
         return new Result($httpCode, $data);
     }
 }

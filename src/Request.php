@@ -54,9 +54,14 @@ class Request
     private $fileForPutRequest = null;
 
     /**
+     * @var bool
+     */
+    private $isFollow = false;
+
+    /**
      * @var string
      */
-    private $socket = '';
+    private $unixSocket = '';
 
     /** @var string */
     private $outFile = '';
@@ -85,7 +90,7 @@ class Request
      */
     public function setUnixSocket(string $socket): void
     {
-        $this->socket = $socket;
+        $this->unixSocket = $socket;
     }
 
     /**
@@ -93,7 +98,7 @@ class Request
      */
     public function getUnixSocket(): string
     {
-        return $this->socket;
+        return $this->unixSocket;
     }
 
     /**
@@ -256,7 +261,7 @@ class Request
     /**
      * @param string $file
      */
-    public function setFileForPutRequest(string $file)
+    public function setFileForPutRequest(string $file): void
     {
         $this->fileForPutRequest = $file;
     }
@@ -271,7 +276,7 @@ class Request
         $this->headers[] = $name . ': ' . $value;
     }
 
-    public function setHeaders(array $headers)
+    public function setHeaders(array $headers): void
     {
         $this->headers = $headers;
     }
@@ -309,4 +314,22 @@ class Request
     {
         return $this->outFile;
     }
+
+
+    /**
+     * @return bool
+     */
+    public function isFollowLocation(): bool
+    {
+        return $this->isFollow;
+    }
+
+    /**
+     * @param bool $isFollow
+     */
+    public function setFollowLocation(bool $isFollow): void
+    {
+        $this->isFollow = $isFollow;
+    }
+
 }
