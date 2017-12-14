@@ -273,7 +273,7 @@ class Request
      */
     public function addHeader(string $name, string $value): void
     {
-        $this->headers[] = $name . ': ' . $value;
+        $this->headers[$name] = $value;
     }
 
     public function setHeaders(array $headers): void
