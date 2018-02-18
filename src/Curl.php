@@ -89,7 +89,16 @@ class Curl
         }
 
         $data = curl_exec($curl);
-        if (curl_errno($curl)) {
+        $errorCode = curl_errno($curl);
+        if ($errorCode) {
+            if ($errorCode === CURLE_COULDNT_CONNECT && $request->getUnixSocket()) {
+                $msg = vsprintf(
+                    'Check permission to "%s". User /init-docker-socket-right.sh in fpm container',
+                    [$request->getUnixSocket(),]
+                );
+                throw new CurlException($msg);
+            }
+
             throw new CurlException(curl_error($curl));
         }
 
