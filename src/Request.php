@@ -250,12 +250,11 @@ class Request
     /**
      * Устанавливаем какие файлы надо загрузить
      * @param string $name Название параметра
-     * @param \CURLFile $file Массив моделей файлова
+     * @param File $file Массив моделей файлова
      */
-    public function addFile(string $name, \CURLFile $file): void
+    public function addFile(string $name, File $file): void
     {
         $this->data[$name] = $file;
-        $this->method = self::METHOD_POST;
     }
 
     /**
@@ -292,7 +291,7 @@ class Request
 
     /**
      * Получаем модель файлов, который нужно загрузить
-     * @return \CURLFile[] Модель файлов
+     * @return File[] Модель файлов
      */
     public function getFiles(): array
     {
