@@ -7,7 +7,7 @@ namespace LightweightCurl;
  * Настройки запроса
  * @author vk@wumvi.com
  */
-class Request
+class Request implements RequestInterface
 {
     private const DEFAULT_TIMEOUT = 5;
 
@@ -112,18 +112,20 @@ class Request
 
     /**
      * Устанавливаем настройки проекси
-     * @param ProxySettings $proxy Модель настроек
+     *
+     * @param ProxySettingsInterface $proxy Модель настроек
      */
-    public function setProxy(ProxySettings $proxy): void
+    public function setProxy(ProxySettingsInterface $proxy): void
     {
         $this->proxy = $proxy;
     }
 
     /**
      * Получаем настройки прокси
-     * @return ProxySettings|null Настройки
+     *
+     * @return ProxySettingsInterface|null Настройки
      */
-    public function getProxy(): ?ProxySettings
+    public function getProxy(): ?ProxySettingsInterface
     {
         return $this->proxy;
     }

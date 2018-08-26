@@ -6,7 +6,7 @@ namespace LightweightCurl;
 /**
  * Модель ответа запроса
  */
-class Result
+class Result implements ResultInterface
 {
     /** @var int Код ответа */
     private $httpCode;

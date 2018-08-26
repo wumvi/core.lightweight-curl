@@ -1,7 +1,6 @@
 {
   "name": "wumvi/lightweight-curl",
   "description": "LightweightCurl Curl library",
-  "library": "library",
   "autoload": {
     "psr-4": {
       "LightweightCurl\\": "src"

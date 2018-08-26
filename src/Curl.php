@@ -3,18 +3,18 @@ declare(strict_types=1);
 
 namespace LightweightCurl;
 
-
-class Curl
+class Curl implements CurlInterface
 {
     /**
      * Выполняет запроса
      *
-     * @param Request $request
-     * @return Result Модель ответа
+     * @param RequestInterface $request
      *
-     * @throws CurlException
+     * @return ResultInterface Модель ответа
+     *
+     * @throws
      */
-    public function call(Request $request): Result
+    public function call(RequestInterface $request): ResultInterface
     {
         $url = $request->getUrl();
         if (empty($url)) {

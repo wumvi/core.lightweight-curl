@@ -6,7 +6,7 @@ namespace LightweightCurl;
 /**
  * Настройки proxy
  */
-class ProxySettings
+class ProxySettings implements ProxySettingsInterface
 {
     /** Socks5 proxy */
     const TYPE_SOCKS5 = CURLPROXY_SOCKS5;
@@ -25,9 +25,10 @@ class ProxySettings
 
     /**
      * Устанавливаем тип прокси
+     *
      * @param int $type Тип прокси см ProxySettings:TYPE_*
      */
-    public function setType(int $type)
+    public function setType(int $type): void
     {
         $this->type = $type;
     }
@@ -45,7 +46,7 @@ class ProxySettings
      * Устанавливаем Url проекси
      * @param string $url Url proxy
      */
-    public function setUrl(string $url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
