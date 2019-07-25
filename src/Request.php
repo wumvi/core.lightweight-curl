@@ -20,6 +20,9 @@ class Request implements RequestInterface
     /** Запроса PUT */
     const METHOD_PUT = 3;
 
+    /** Запроса DELETE */
+    const METHOD_DELETE = 4;
+
     /** @var int Метод запроса */
     private $method = self::METHOD_GET;
 

@@ -44,6 +44,9 @@ class Curl implements CurlInterface
 
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
                 break;
+            case Request::METHOD_DELETE:
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+                break;
         }
 
         curl_setopt($curl, CURLINFO_HEADER_OUT, $request->isOutputHeaders());
