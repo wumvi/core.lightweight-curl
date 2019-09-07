@@ -10,4 +10,6 @@ class ContentType
 
     /** @see Content type */
     public const X_WWW_FORM_URLENCODED = 'application/x-www-form-urlencoded';
+
+    public const JSON = 'application/json';
 }

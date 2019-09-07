@@ -7,15 +7,15 @@ namespace LightweightCurl;
  * Настройки запроса
  * @author vk@wumvi.com
  */
-interface RequestInterface
+interface IRequest
 {
     public function getFileForPutRequest(): ?string;
 
     /**
      * Устанавливаем метод запроса
-     * @param int $method Метод запроса
+     * @param string $method Метод запроса
      */
-    public function setMethod(int $method): void;
+    public function setMethod(string $method): void;
 
     /**
      * @param string $socket
@@ -29,23 +29,23 @@ interface RequestInterface
 
     /**
      * Получаем метод запроса
-     * @return int Метод запроса
+     * @return string Метод запроса
      */
-    public function getMethod(): int;
+    public function getMethod(): string;
 
     /**
      * Устанавливаем настройки проекси
      *
-     * @param ProxySettingsInterface $proxy Модель настроек
+     * @param IProxySettings $proxy Модель настроек
      */
-    public function setProxy(ProxySettingsInterface $proxy): void;
+    public function setProxy(IProxySettings $proxy): void;
 
     /**
      * Получаем настройки прокси
      *
-     * @return ProxySettingsInterface|null Настройки
+     * @return IProxySettings|null Настройки
      */
-    public function getProxy(): ?ProxySettingsInterface;
+    public function getProxy(): ?IProxySettings;
 
     /**
      * Устанавливаем флаг расширенного вывода
@@ -74,7 +74,8 @@ interface RequestInterface
     public function setTimeout(int $timeout): void;
 
 
-    public function getTimeout(): int;
+    public function getResponseTimeout(): int;
+
     /**
      * Устанавливаем флаг вывода заголовков
      * @param bool $isOutputHeaders Флаг вывода заголовков
@@ -160,6 +161,7 @@ interface RequestInterface
      * @param string $outFile
      */
     public function setOutFilename(string $outFile): void;
+
     /**
      * @return string
      */
@@ -175,4 +177,9 @@ interface RequestInterface
      * @param bool $isFollow
      */
     public function setFollowLocation(bool $isFollow): void;
+
+    /**
+     * @return int
+     */
+    public function getConnectTimeout(): int;
 }

@@ -6,19 +6,19 @@ namespace LightweightCurl;
 /**
  * Настройки proxy
  */
-interface ProxySettingsInterface
+interface IProxySettings
 {
     /**
      * Устанавливаем тип прокси
      * @param int $type Тип прокси см ProxySettings:TYPE_*
      */
-    public function setType(int $type): void;
+    public function setSocketType(int $type): void;
 
     /**
      * Получаем тип проекси
      * @return int Тип прокси
      */
-    public function getType(): int;
+    public function getSocketType(): int;
 
     /**
      * Устанавливаем Url проекси

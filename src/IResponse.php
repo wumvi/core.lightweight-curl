@@ -6,7 +6,7 @@ namespace LightweightCurl;
 /**
  * Модель ответа запроса
  */
-interface ResultInterface
+interface IResponse
 {
     /**
      * Получаем код ответа

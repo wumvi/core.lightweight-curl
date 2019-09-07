@@ -7,23 +7,23 @@ namespace LightweightCurl;
  * Настройки запроса
  * @author vk@wumvi.com
  */
-class Request implements RequestInterface
+class Request implements IRequest
 {
     private const DEFAULT_TIMEOUT = 5;
 
     /** Запрос GET */
-    const METHOD_GET = 1;
+    const METHOD_GET = 'GET';
 
     /** Запроса POST */
-    const METHOD_POST = 2;
+    const METHOD_POST = 'POST';
 
     /** Запроса PUT */
-    const METHOD_PUT = 3;
+    const METHOD_PUT = 'PUT';
 
     /** Запроса DELETE */
-    const METHOD_DELETE = 4;
+    const METHOD_DELETE = 'DELETE';
 
-    /** @var int Метод запроса */
+    /** @var string Метод запроса */
     private $method = self::METHOD_GET;
 
     /** @var string Url запроса */
@@ -45,7 +45,7 @@ class Request implements RequestInterface
     private $isOutputHeaders = false;
 
     /** @var string Выводить ли заголовки запроса */
-    private $contentType = ContentType::MULTIPART_FORM_DATA;
+    private $contentType = '';
 
     /** @var \CURLFile[] Модель файлов для загрзуки */
     private $files = [];
@@ -69,6 +69,9 @@ class Request implements RequestInterface
     /** @var string */
     private $outFile = '';
 
+    /** @var int  */
+    private $connectTimeout = 0;
+
     /**
      * @var int
      */
@@ -81,9 +84,9 @@ class Request implements RequestInterface
 
     /**
      * Устанавливаем метод запроса
-     * @param int $method Метод запроса
+     * @param string $method Метод запроса
      */
-    public function setMethod(int $method): void
+    public function setMethod(string $method): void
     {
         $this->method = $method;
     }
@@ -106,9 +109,9 @@ class Request implements RequestInterface
 
     /**
      * Получаем метод запроса
-     * @return int Метод запроса
+     * @return string Метод запроса
      */
-    public function getMethod(): int
+    public function getMethod(): string
     {
         return $this->method;
     }
@@ -116,9 +119,9 @@ class Request implements RequestInterface
     /**
      * Устанавливаем настройки проекси
      *
-     * @param ProxySettingsInterface $proxy Модель настроек
+     * @param IProxySettings $proxy Модель настроек
      */
-    public function setProxy(ProxySettingsInterface $proxy): void
+    public function setProxy(IProxySettings $proxy): void
     {
         $this->proxy = $proxy;
     }
@@ -126,9 +129,9 @@ class Request implements RequestInterface
     /**
      * Получаем настройки прокси
      *
-     * @return ProxySettingsInterface|null Настройки
+     * @return IProxySettings|null Настройки
      */
-    public function getProxy(): ?ProxySettingsInterface
+    public function getProxy(): ?IProxySettings
     {
         return $this->proxy;
     }
@@ -175,7 +178,7 @@ class Request implements RequestInterface
     }
 
 
-    public function getTimeout(): int
+    public function getResponseTimeout(): int
     {
         return $this->timeout;
     }
@@ -336,4 +339,13 @@ class Request implements RequestInterface
         $this->isFollow = $isFollow;
     }
 
+    public function setConnectTimeout($timeout): void
+    {
+        $this->connectTimeout = $timeout;
+    }
+
+    public function getConnectTimeout(): int
+    {
+        return $this->connectTimeout;
+    }
 }
