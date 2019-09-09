@@ -20,4 +20,5 @@ interface IResponse
      * @return string Данные ответа
      */
     public function getData(): string;
+    public function getHeaders(): string;
 }

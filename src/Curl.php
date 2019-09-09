@@ -26,30 +26,35 @@ class Curl implements ICurl
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
+        $postData = $request->getData();
 
         switch ($request->getMethod()) {
             case Request::METHOD_PUT:
-                curl_setopt($curl, CURLOPT_PUT, true);
                 $file = $request->getFileForPutRequest();
                 if ($file) {
+                    curl_setopt($curl, CURLOPT_PUT, true);
                     curl_setopt($curl, CURLOPT_INFILE, fopen($file, 'r'));
                     curl_setopt($curl, CURLOPT_INFILESIZE, filesize($file));
                 }
-
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $request->getMethod());
                 break;
             case Request::METHOD_POST:
-                curl_setopt($curl, CURLOPT_POST, 1);
-                $postData = $request->getData();
+                curl_setopt($curl, CURLOPT_POST, true);
                 if ($request->getContentType() === ContentType::X_WWW_FORM_URLENCODED && is_array($postData)) {
                     $postData = urldecode(http_build_query($postData));
                 }
 
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
                 break;
             default:
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $request->getMethod());
                 break;
         }
+
+        if (!empty($postData)) {
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
+        }
+
+        $isHeaderOut = empty($request->getOutFilename());
 
         curl_setopt_array($curl, [
             CURLINFO_HEADER_OUT => $request->isOutputHeaders(),
@@ -60,6 +65,7 @@ class Curl implements ICurl
             CURLOPT_CONNECTTIMEOUT => $request->getConnectTimeout(),
             CURLOPT_TIMEOUT => $request->getResponseTimeout(),
             CURLOPT_FOLLOWLOCATION => $request->isFollowLocation(),
+            CURLOPT_HEADER => $isHeaderOut
         ]);
 
         if (!empty($request->getUnixSocket())) {
@@ -95,11 +101,20 @@ class Curl implements ICurl
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         }
 
-        $data = curl_exec($curl);
+        $rawData = curl_exec($curl);
         $httpCode = $this->getHttpCode($curl, $request);
-        $data = $request->getOutFilename() ? '' : $data;
 
-        return new Response($httpCode, $data);
+        $headers = '';
+        $body = '';
+        if ($isHeaderOut) {
+            $headerSize = curl_getinfo($curl , CURLINFO_HEADER_SIZE);
+            $headers = substr($rawData, 0, $headerSize);
+            $body = substr($rawData, $headerSize);
+        }
+
+        curl_close($curl);
+
+        return new Response($httpCode, $body, $headers);
     }
 
     /**
@@ -115,7 +130,6 @@ class Curl implements ICurl
         $errorCode = curl_errno($curl);
         if ($errorCode === 0) {
             $httpCode = (int)curl_getinfo($curl, CURLINFO_HTTP_CODE);
-            curl_close($curl);
 
             return $httpCode;
         }

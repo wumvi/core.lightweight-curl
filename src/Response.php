@@ -14,16 +14,21 @@ class Response implements IResponse
     /** @var string Данные ответа */
     private $data;
 
+    /** @var string Headers */
+    private $headers;
+
     /**
      * Result constructor.
      *
      * @param int $httpCode Код ответа
      * @param string $data Данные ответа
+     * @param string $headers Заголовки
      */
-    public function __construct(int $httpCode, string $data)
+    public function __construct(int $httpCode, string $data, string $headers)
     {
         $this->httpCode = $httpCode;
         $this->data = $data;
+        $this->headers = $headers;
     }
 
     /**
@@ -44,5 +49,13 @@ class Response implements IResponse
     public function getData(): string
     {
         return $this->data;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHeaders(): string
+    {
+        return $this->headers;
     }
 }
