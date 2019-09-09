@@ -1,6 +1,7 @@
 {
   "name": "wumvi/lightweight-curl",
   "description": "LightweightCurl Curl library",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "LightweightCurl\\": "src"
