@@ -69,8 +69,10 @@ class Request implements IRequest
     /** @var string */
     private $outFile = '';
 
-    /** @var int  */
+    /** @var int */
     private $connectTimeout = 0;
+
+    private $encoding;
 
     /**
      * @var int
@@ -97,6 +99,11 @@ class Request implements IRequest
     public function setUnixSocket(string $socket): void
     {
         $this->unixSocket = $socket;
+    }
+
+    public function setEncoding(string $encoding): void
+    {
+        $this->encoding = $encoding;
     }
 
     /**
@@ -347,5 +354,10 @@ class Request implements IRequest
     public function getConnectTimeout(): int
     {
         return $this->connectTimeout;
+    }
+
+    public function getEncoding(): string
+    {
+        return $this->encoding;
     }
 }

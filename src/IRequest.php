@@ -182,4 +182,6 @@ interface IRequest
      * @return int
      */
     public function getConnectTimeout(): int;
+
+    public function getEncoding(): string;
 }

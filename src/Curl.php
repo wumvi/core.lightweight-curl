@@ -101,13 +101,17 @@ class Curl implements ICurl
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         }
 
+        if ($request->getEncoding()) {
+            curl_setopt($curl, CURLOPT_ENCODING, $request->getEncoding());
+        }
+
         $rawData = curl_exec($curl);
         $httpCode = $this->getHttpCode($curl, $request);
 
         $headers = '';
         $body = '';
         if ($isHeaderOut) {
-            $headerSize = curl_getinfo($curl , CURLINFO_HEADER_SIZE);
+            $headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
             $headers = substr($rawData, 0, $headerSize);
             $body = substr($rawData, $headerSize);
         }
